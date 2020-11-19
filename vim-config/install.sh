@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cp vimrc $HOME/
+cp -f vimrc $HOME/.vimrc 
 cp -rf colors $HOME/.vim

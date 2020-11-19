@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cp zshrc $HOME/
+cp -f zshrc $HOME/.zshrc
 cp -f agnoster.zsh-theme  $HOME/.oh-my-zsh/themes
