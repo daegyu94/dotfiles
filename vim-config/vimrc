@@ -55,7 +55,7 @@ highlight Normal ctermbg=black ctermfg=white
 
 let NERDTreeWinPos = "left"
 nmap <F7> :NERDTree<CR>
-nmap <F8> :TlistToggle<CR>
+nmap <F8> :TagbarToggle<CR>
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_Inc_Winwidth = 0
 let Tlist_Exit_OnlyWindow = 0
