@@ -12,10 +12,12 @@ set number
 set encoding=utf-8
 set fileencodings=utf-8,euckr
 set tenc=utf-8
-set expandtab
 set hlsearch
-set ignorecase
+"set ignorecase
 set tabstop=4
+set colorcolumn=81 " higlight column right after max textwidth
+hi ColorColumn ctermbg=lightcyan guibg=blue
+set smarttab                            " make <tab> and <backspace> smarter
 set lbr
 set incsearch
 set cursorline
@@ -27,6 +29,15 @@ set backspace=eol,start,indent
 set history=1000
 highlight Comment term=bold cterm=bold ctermfg=4
 set t_Co=256
+
+filetype off
+filetype plugin indent on
+au BufNewFile,BufRead *.c,*.h setlocal ts=8 sw=8 sts=8 noexpandtab smartindent
+au BufNewFile,BufRead *.py,*.cc,*.cpp,*.hpp setlocal ts=4 sw=4 sts=4 expandtab smartindent
+autocmd FileType sh setlocal ts=2 sw=2 sts=2 expandtab smartindent
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent
+autocmd FileType xml setlocal ts=2 sts=2 sw=2 expandtab autoindent
+autocmd FileType java setlocal ts=2 sts=2 sw=2 expandtab autoindent smartindent
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -44,12 +55,13 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'nathanaelkane/vim-indent-guides'
 "Plugin 'xolox/vim-easytags'
-Plugin 'ronakg/quickr-cscope.vim'
+"Plugin 'ronakg/quickr-cscope.vim'
 
 call vundle#end()
 
 "colorscheme jellybeans
 colorscheme gruvbox
+"colorscheme codedark
 highlight Normal ctermbg=black ctermfg=white
 
 
@@ -99,3 +111,49 @@ endfunction
 au BufEnter /* call LoadCscope()
 
 let Tlist_Auto_Open =1
+
+" cscope/vim key mappings
+" 's' symbol: find all references to the token under cursor
+" 'g' global: find global definition(s) of the token under cursor
+" 'c' calls:  find all calls to the function name under cursor
+" 't' text:   find all instances of the text under cursor
+" 'e' egrep:  egrep search for the word under cursor
+" 'f' file:   open the filename under cursor
+" 'i' includes: find files that include the filename under cursor
+" 'd' called: find functions that function under cursor calls
+
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cs find f <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>i :cs find i <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+" CTRL-space <C-@> search and split horizonal window
+nmap <C-@>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>f :scs find f <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>i :scs find i <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+" CTRL-space CTRL-space vertical split
+nmap <C-@><C-@>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@><C-@>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@><C-@>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@><C-@>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@><C-@>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@><C-@>f :vert scs find f <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@><C-@>i :vert scs find i <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@><C-@>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+
+" key map timeout
+"set notimeout
+" Or
+"set timetouteln=4000
+"set ttimeout
+"set ttimeoutlen=100
