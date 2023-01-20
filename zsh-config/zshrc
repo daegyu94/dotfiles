@@ -97,3 +97,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+## home end key binding
+case $TERM in (xterm*)
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+esac
