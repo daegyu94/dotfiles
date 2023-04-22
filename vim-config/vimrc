@@ -1,86 +1,55 @@
-set nocompatible
+set fileencodings=utf-8,euckr
+set nocompatible " no compatible to original vi 
 set autoindent
 set cindent
 set smartindent
-set wrap
-set nowrapscan
+set wrap " set automatic line wrapping for lines exceeding the textwidth
+set nowrapscan " do not return to the beginning from the end of the document
 set nobackup
 set noswapfile
-set ruler
-set shiftwidth=4
-set number
-set encoding=utf-8
-set fileencodings=utf-8,euckr
-set tenc=utf-8
-set hlsearch
-"set ignorecase
+set ruler " current cursor
+set shiftwidth=4 " auto indent
 set tabstop=4
-set colorcolumn=81 " higlight column right after max textwidth
-hi ColorColumn ctermbg=lightcyan guibg=blue
-set smarttab                            " make <tab> and <backspace> smarter
-set lbr
-set incsearch
+set number " line number
+set smarttab " make <tab> and <backspace> smarter
+set lbr " linebreak by word
+set hlsearch
+set incsearch " search for each character
 set cursorline
-set laststatus=2
+set colorcolumn=81 " higlight column right after max textwidth
+set laststatus=2 " set whether or not to display the status line in the last window
 syntax on
-filetype plugin indent on
-set background=dark
 set backspace=eol,start,indent
-set history=1000
-highlight Comment term=bold cterm=bold ctermfg=4
+set history=1000 " cmd history
 set t_Co=256
 
 filetype off
-filetype plugin indent on
-au BufNewFile,BufRead *.c,*.h setlocal ts=8 sw=8 sts=8 noexpandtab smartindent
-au BufNewFile,BufRead *.py,*.cc,*.cpp,*.hpp setlocal ts=4 sw=4 sts=4 expandtab smartindent
-autocmd FileType sh setlocal ts=2 sw=2 sts=2 expandtab smartindent
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent
-autocmd FileType xml setlocal ts=2 sts=2 sw=2 expandtab autoindent
-autocmd FileType java setlocal ts=2 sts=2 sw=2 expandtab autoindent smartindent
-
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'nanotech/jellybeans.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'AutoComplPop'
-Plugin 'prabirshrestha/vim-lsp'
 Plugin 'majutsushi/tagbar'
-Plugin 'blueyed/vim-diminactive'
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'nathanaelkane/vim-indent-guides'
-"Plugin 'xolox/vim-easytags'
-"Plugin 'ronakg/quickr-cscope.vim'
-
+Plugin 'flazz/vim-colorschemes'
+Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
-"colorscheme jellybeans
-colorscheme gruvbox
-"colorscheme codedark
-highlight Normal ctermbg=black ctermfg=white
+filetype plugin indent on
+autocmd FileType c,cc,cpp,h,hpp setlocal ts=4 sw=4 sts=4 expandtab smartindent
+autocmd FileType sh,yaml,xml,java setlocal ts=2 sw=2 sts=2 expandtab smartindent
 
+colorscheme vim-vscode-theme
 
-let NERDTreeWinPos = "left"
+"Nerdtree
 nmap <F7> :NERDTree<CR>
-nmap <F8> :TagbarToggle<CR>
-let Tlist_Ctags_Cmd = "/usr/bin/ctags"
-let Tlist_Inc_Winwidth = 0
-let Tlist_Exit_OnlyWindow = 0
-let Tlist_Auto_Open = 0"
 
 "ctags
 set tags=./tags,tags
 set tagbsearch
-"let g:easytags_async=1
-"let g:easytags_auto_highlight = 0
-"let g:easytags_include_members = 1
-"let g:easytags_dynamic_files = 1
-
+nmap <F8> :TagbarToggle<CR>
 
 "cscope
 set csprg=/usr/bin/cscope
@@ -89,9 +58,9 @@ set cst
 set nocsverb
 
 if filereadable("./cscope.out")
-        cs add cscope.out
+  cs add cscope.out
 else
-        cs add /usr/src/linux/cscope.out
+  cs add /usr/src/linux/cscope.out
 endif
 set csverb
 
@@ -109,8 +78,6 @@ function! LoadCscope()
   endif
 endfunction
 au BufEnter /* call LoadCscope()
-
-let Tlist_Auto_Open =1
 
 " cscope/vim key mappings
 " 's' symbol: find all references to the token under cursor
@@ -130,30 +97,3 @@ nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>f :cs find f <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>i :cs find i <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-" CTRL-space <C-@> search and split horizonal window
-nmap <C-@>s :scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>g :scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>t :scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>f :scs find f <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>i :scs find i <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>d :scs find d <C-R>=expand("<cword>")<CR><CR>
-
-" CTRL-space CTRL-space vertical split
-nmap <C-@><C-@>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@><C-@>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@><C-@>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@><C-@>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@><C-@>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@><C-@>f :vert scs find f <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@><C-@>i :vert scs find i <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@><C-@>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
-
-" key map timeout
-"set notimeout
-" Or
-"set timetouteln=4000
-"set ttimeout
-"set ttimeoutlen=100
