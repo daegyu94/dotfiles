@@ -39,7 +39,7 @@ call vundle#end()
 
 filetype plugin indent on
 autocmd FileType c,cc,cpp,h,hpp,py setlocal ts=4 sw=4 sts=4 expandtab smartindent
-autocmd FileType sh,yaml,xml,java,proto setlocal ts=2 sw=2 sts=2 expandtab smartindent
+autocmd FileType sh,yaml,xml,java,proto,html,php,javascript setlocal ts=2 sw=2 sts=2 expandtab smartindent
 
 colorscheme codedark
 
